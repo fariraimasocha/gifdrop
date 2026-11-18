@@ -53,6 +53,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en" className="dark">
       <head>
         <HeadContent />
+        <script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="d3c5d72d-69b2-4445-8fe8-acd10b295b39"
+        />
       </head>
       <body>
         <TooltipProvider delayDuration={200}>
