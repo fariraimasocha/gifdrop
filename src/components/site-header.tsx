@@ -3,8 +3,8 @@ import { PixelarticonsDownload } from '#/components/icons/pixelarticons/download
 import { FITMYCV_URL } from '#/lib/site'
 
 export const NAV = [
-  { title: 'TikTok', url: '/tiktok' },
-  { title: 'Instagram', url: '/instagram' },
+  { title: 'TikTok', url: '/tiktok', hash: 'make' },
+  { title: 'Instagram', url: '/instagram', hash: 'make' },
   { title: 'Blog', url: '/blog' },
   { title: 'How it works', url: '/help' },
   { title: 'My stickers', url: '/history' },
@@ -57,7 +57,7 @@ export function SiteHeader() {
           {NAV.map((n) => (
             <Link
               key={n.url}
-              to={n.url}
+              to={n.url} hash={'hash' in n ? n.hash : undefined}
               className="text-[15px] font-medium text-muted-foreground transition-colors hover:text-foreground data-[status=active]:font-semibold data-[status=active]:text-foreground"
             >
               {n.title}
@@ -83,7 +83,7 @@ export function SiteHeader() {
             {NAV.map((n) => (
               <Link
                 key={n.url}
-                to={n.url}
+                to={n.url} hash={'hash' in n ? n.hash : undefined}
                 onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}
                 className="rounded-2xl px-4 py-3 text-[17px] font-medium hover:bg-muted data-[status=active]:bg-brand-soft data-[status=active]:font-semibold"
               >
@@ -109,7 +109,7 @@ export function SiteFooter() {
         </div>
         <nav aria-label="Footer" className="grid grid-cols-2 gap-x-10 gap-y-3 text-[15px]">
           {[{ title: 'Make a sticker', url: '/' } as const, ...NAV].map((n) => (
-            <Link key={n.url} to={n.url} className="text-muted-foreground hover:text-foreground">
+            <Link key={n.url} to={n.url} hash={'hash' in n ? n.hash : undefined} className="text-muted-foreground hover:text-foreground">
               {n.title}
             </Link>
           ))}
