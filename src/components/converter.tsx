@@ -164,7 +164,7 @@ export function Converter({ eyebrow, headline, blurb, placeholder }: Props) {
 }
 
 // ponytail: hand-picked from GIPHY trending + one viral X clip; swap files in public/hero when they go stale
-const HERO_CLIPS = [
+export const HERO_CLIPS = [
   { src: '/hero/travolta.mp4', tag: 'wait what', at: 'top-0 left-4 rotate-[-12deg]' },
   { src: '/hero/liotta.mp4', tag: 'LMAO', at: 'top-52 -left-4 rotate-[8deg] [animation-delay:-2s]' },
   { src: '/hero/obajeeeeeee.mp4', tag: 'us fr', at: 'top-[24rem] -left-2 rotate-[-6deg] [animation-delay:-4s]' },

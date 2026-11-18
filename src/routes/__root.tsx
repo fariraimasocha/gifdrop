@@ -6,7 +6,7 @@ import { CF_BEACON_TOKEN, SITE_URL } from '#/lib/site'
 
 import appCss from '../styles.css?url'
 
-const OG_IMAGE = `${SITE_URL}/og-image.jpg`
+const OG_IMAGE = `${SITE_URL}/og-image-v2.jpg`
 const TITLE = 'gifdrop: turn any GIF or clip into a WhatsApp sticker'
 const DESCRIPTION =
   'Paste an X, TikTok, Instagram or GIPHY link and get an animated WhatsApp sticker. Copy, paste, send. Free, no app.'

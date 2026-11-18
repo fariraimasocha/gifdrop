@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { saveSticker } from '#/lib/stickers'
 
 export type Media = { file: File; previewUrl: string }
 export type Current = Media & { source: string; gif?: Media }
@@ -42,6 +43,7 @@ export const useGif = create<GifState>()(
         const previewUrl = file === cur.file ? cur.previewUrl : URL.createObjectURL(file)
         // every finished sticker counts toward the user's tally (kept across visits)
         set({ current: { ...cur, gif: { file, previewUrl } }, made: get().made + 1 })
+        void saveSticker(file, /^https?:/.test(cur.source) ? cur.source : undefined).catch(() => {})
       },
       remember: (link) =>
         set({ history: [{ link, at: Date.now() }, ...get().history.filter((h) => h.link !== link)].slice(0, 30) }),
