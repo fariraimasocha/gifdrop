@@ -4,7 +4,10 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import toast from 'react-hot-toast'
-import { ArrowRight, ClipboardPaste, Link2, Loader2 } from 'lucide-react'
+import { PixelarticonsArrowRight } from '#/components/icons/pixelarticons/arrow-right'
+import { PixelarticonsClipboard } from '#/components/icons/pixelarticons/clipboard'
+import { PixelarticonsLink } from '#/components/icons/pixelarticons/link'
+import { PixelarticonsLoader } from '#/components/icons/pixelarticons/loader'
 import { Button } from '#/components/ui/button'
 import { DropZone } from '#/components/drop-zone'
 import { ResultCard } from '#/components/result-card'
@@ -87,7 +90,7 @@ function Home() {
           Link to an X post or GIF
         </label>
         <div className="flex h-14 items-center gap-2 rounded-lg bg-card pr-1.5 pl-3.5 shadow-[inset_0_0_0_1px_var(--border)] focus-within:shadow-[inset_0_0_0_1px_var(--brand)] sm:h-12">
-          <Link2 className="size-4 shrink-0 text-dim" aria-hidden />
+          <PixelarticonsLink className="size-4 shrink-0 text-dim" aria-hidden />
           {/* 16px on mobile so iOS Safari doesn't zoom the page on focus */}
           <input
             id="link"
@@ -106,12 +109,12 @@ function Home() {
           />
           {link ? (
             <Button type="submit" disabled={busy} className="size-11 shrink-0 px-0 sm:h-9 sm:w-auto sm:px-3.5" aria-label="Get GIF">
-              {busy ? <Loader2 className="animate-spin" /> : <ArrowRight />}
+              {busy ? <PixelarticonsLoader className="animate-spin" /> : <PixelarticonsArrowRight />}
               <span className="hidden sm:inline">Get GIF</span>
             </Button>
           ) : (
             <Button type="button" variant="secondary" onClick={pasteFromClipboard} className="h-11 shrink-0 px-3.5 sm:h-9">
-              <ClipboardPaste /> Paste
+              <PixelarticonsClipboard /> Paste
             </Button>
           )}
         </div>

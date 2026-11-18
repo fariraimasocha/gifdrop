@@ -1,6 +1,9 @@
 import { forwardRef, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { Download, Loader2, Send, X } from 'lucide-react'
+import { PixelarticonsDownload } from '#/components/icons/pixelarticons/download'
+import { PixelarticonsLoader } from '#/components/icons/pixelarticons/loader'
+import { PixelarticonsSend } from '#/components/icons/pixelarticons/send'
+import { PixelarticonsClose } from '#/components/icons/pixelarticons/close'
 import { Button } from '#/components/ui/button'
 import { useGif } from '#/stores/gif'
 import type { Current } from '#/stores/gif'
@@ -50,12 +53,12 @@ export const ResultCard = forwardRef<HTMLElement, { current: Current }>(function
             </>
           ) : (
             <>
-              <Loader2 className="size-3 animate-spin" aria-hidden /> {stage ?? 'Preparing…'}
+              <PixelarticonsLoader className="size-3 animate-spin" aria-hidden /> {stage ?? 'Preparing…'}
             </>
           )}
         </p>
         <Button variant="ghost" size="icon" onClick={() => setCurrent(null)} aria-label="Clear">
-          <X />
+          <PixelarticonsClose />
         </Button>
       </div>
 
@@ -84,11 +87,11 @@ export const ResultCard = forwardRef<HTMLElement, { current: Current }>(function
       {/* phones: actions pinned to the bottom, in thumb reach, above the home indicator */}
       <div className="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-[#1f1f22] bg-background/95 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur sm:static sm:z-auto sm:bg-transparent sm:p-3 sm:backdrop-blur-none">
         <Button variant="brand" size="lg" className="h-12 flex-1 text-[13px] sm:h-11 sm:text-xs" disabled={!gif} onClick={() => gif && sendToWhatsApp(gif.file)}>
-          {gif ? <Send /> : <Loader2 className="animate-spin" />}
+          {gif ? <PixelarticonsSend /> : <PixelarticonsLoader className="animate-spin" />}
           {gif ? 'Send GIF to WhatsApp' : (stage ?? 'Preparing GIF…')}
         </Button>
         <Button variant="secondary" size="lg" className="size-12 px-0 sm:h-11 sm:w-auto sm:px-5" disabled={!gif} onClick={() => gif && save(gif.file)} aria-label="Save GIF">
-          <Download /> <span className="hidden sm:inline">Save</span>
+          <PixelarticonsDownload /> <span className="hidden sm:inline">Save</span>
         </Button>
       </div>
     </section>

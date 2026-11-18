@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import toast from 'react-hot-toast'
-import { RotateCw } from 'lucide-react'
+import { PixelarticonsReload } from '#/components/icons/pixelarticons/reload'
 import { Button } from '#/components/ui/button'
 import { useGif } from '#/stores/gif'
 import { fetchLink } from '#/lib/client'
@@ -45,7 +45,7 @@ function HistoryPage() {
                 <p className="font-mono text-[11px] text-dim">{new Date(h.at).toLocaleString()}</p>
               </div>
               <Button variant="secondary" onClick={() => reuse(h.link)} aria-label="Use again" className="size-11 shrink-0 px-0 sm:h-8 sm:w-auto sm:px-3">
-                <RotateCw /> <span className="hidden sm:inline">Use again</span>
+                <PixelarticonsReload /> <span className="hidden sm:inline">Use again</span>
               </Button>
             </li>
           ))}

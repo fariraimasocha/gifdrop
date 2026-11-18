@@ -1,6 +1,6 @@
 // Adapted from opensourceui.in "File Upload Field" (MIT, Bidyut Kundu), recoloured for the dark theme.
 import { useRef, useState } from 'react'
-import { ImagePlus } from 'lucide-react'
+import { PixelarticonsImagePlus } from '#/components/icons/pixelarticons/image-plus'
 import { cn } from '#/lib/utils'
 
 export const ACCEPT = 'image/gif,video/mp4'
@@ -73,7 +73,7 @@ export function DropZone({ onFile, disabled }: { onFile: (f: File) => void; disa
             dragging && 'scale-105 text-brand',
           )}
         >
-          <ImagePlus className="size-4" />
+          <PixelarticonsImagePlus className="size-4" />
         </span>
         <p className="text-[15px] text-foreground sm:text-sm">
           {dragging ? 'Drop it' : (

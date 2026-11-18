@@ -1,5 +1,7 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { History, Sparkles, CircleHelp } from 'lucide-react'
+import { PixelarticonsClock } from '#/components/icons/pixelarticons/clock'
+import { PixelarticonsSparkles } from '#/components/icons/pixelarticons/sparkles'
+import { PixelarticonsInfoBox } from '#/components/icons/pixelarticons/info-box'
 import {
   Sidebar,
   SidebarContent,
@@ -15,9 +17,9 @@ import {
 } from '#/components/ui/sidebar'
 
 export const NAV = [
-  { title: 'Convert', url: '/', icon: Sparkles },
-  { title: 'History', url: '/history', icon: History },
-  { title: 'How it works', url: '/help', icon: CircleHelp },
+  { title: 'Convert', url: '/', icon: PixelarticonsSparkles },
+  { title: 'History', url: '/history', icon: PixelarticonsClock },
+  { title: 'How it works', url: '/help', icon: PixelarticonsInfoBox },
 ] as const
 
 export function pageTitle(pathname: string) {
