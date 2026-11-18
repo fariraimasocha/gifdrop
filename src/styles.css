@@ -1,48 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Geist+Pixel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Sans:opsz,wght@9..40,400..700&family=Geist+Mono:wght@400;500&family=Geist+Pixel&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
-/* Dark zinc look from the Cue inspo, pixel display type + green accent from treg */
+/* Warm paper, ink-black type, sunshine yellow as the one loud colour */
 :root {
-  color-scheme: dark;
-  --background: #09090b;
-  --foreground: #fafafa;
-  --card: #111113;
-  --card-foreground: #fafafa;
-  --popover: #18181b;
-  --popover-foreground: #fafafa;
-  --primary: #fafafa;
-  --primary-foreground: #09090b;
-  --secondary: rgba(39, 39, 42, 0.3);
-  --secondary-foreground: #fafafa;
-  --muted: #1f1f22;
-  --muted-foreground: #a1a1aa;
-  --accent: #1f1f22;
-  --accent-foreground: #fafafa;
-  --destructive: #f87171;
-  --destructive-foreground: #fafafa;
-  --border: #27272a;
-  --input: #27272a;
-  --ring: #3ecf7a;
-  --dim: #71717a;
-  --brand: #3ecf7a;
-  --brand-ink: #04170c;
-  --radius: 0.5rem;
-  --sidebar: #0c0c0e;
-  --sidebar-foreground: #a1a1aa;
-  --sidebar-primary: #fafafa;
-  --sidebar-primary-foreground: #09090b;
-  --sidebar-accent: #1f1f22;
-  --sidebar-accent-foreground: #fafafa;
-  --sidebar-border: #1f1f22;
-  --sidebar-ring: #3ecf7a;
+  color-scheme: light;
+  --background: #fbf8f3;
+  --foreground: #17150f;
+  --card: #ffffff;
+  --card-foreground: #17150f;
+  --popover: #ffffff;
+  --popover-foreground: #17150f;
+  --primary: #17150f;
+  --primary-foreground: #ffffff;
+  --secondary: #ffffff;
+  --secondary-foreground: #17150f;
+  --muted: #f5f1ea;
+  --muted-foreground: #6b6559;
+  --accent: #f5f1ea;
+  --accent-foreground: #17150f;
+  --destructive: #b42318;
+  --destructive-foreground: #ffffff;
+  --border: #e9e3d8;
+  --input: #e9e3d8;
+  --ring: #f2b705;
+  --dim: #a39b8c;
+  --brand: #ffd84d;
+  --brand-soft: #fff4c7;
+  --brand-deep: #f2b705;
+  --brand-ink: #17150f;
+  --mint: #bdf0d2;
+  --mint-ink: #17663d;
+  --radius: 1.75rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #6b6559;
+  --sidebar-primary: #17150f;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f5f1ea;
+  --sidebar-accent-foreground: #17150f;
+  --sidebar-border: #e9e3d8;
+  --sidebar-ring: #f2b705;
 }
 
 @theme inline {
-  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, monospace;
+  --font-display: 'Bricolage Grotesque', 'Geist', ui-sans-serif, system-ui, sans-serif;
   --font-pixel: 'Geist Pixel', 'Geist Mono', ui-monospace, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -66,10 +71,14 @@
   --color-dim: var(--dim);
   --color-brand: var(--brand);
   --color-brand-ink: var(--brand-ink);
-  --radius-sm: 4px;
-  --radius-md: 6px;
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-deep: var(--brand-deep);
+  --color-mint: var(--mint);
+  --color-mint-ink: var(--mint-ink);
+  --radius-sm: 8px;
+  --radius-md: 12px;
   --radius-lg: var(--radius);
-  --radius-xl: 12px;
+  --radius-xl: 20px;
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -92,4 +101,80 @@
   ::selection {
     background: color-mix(in srgb, var(--brand) 35%, transparent);
   }
+}
+
+/* floating hero stickers: a slow bob, off for people who ask for less motion */
+@keyframes bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -6px;
+  }
+}
+@utility animate-bob {
+  animation: bob 5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-bob {
+    animation: none;
+  }
+}
+/* transparent-pixel checkerboard behind the sticker preview */
+@utility bg-checker {
+  background: repeating-conic-gradient(#f5f1ea 0 25%, #fdfcfa 0 50%) 0 0 / 18px 18px;
+}
+
+/* blog post body: rendered from #/lib/md, so plain tags styled here instead of a typography plugin */
+.prose-post {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--foreground);
+}
+.prose-post > * + * {
+  margin-top: 1.1em;
+}
+.prose-post h2 {
+  margin-top: 2em;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.prose-post h3 {
+  margin-top: 1.6em;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+.prose-post ul,
+.prose-post ol {
+  padding-left: 1.4em;
+}
+.prose-post ul {
+  list-style: disc;
+}
+.prose-post ol {
+  list-style: decimal;
+}
+.prose-post li + li {
+  margin-top: 0.4em;
+}
+.prose-post li::marker {
+  color: var(--brand-deep);
+  font-weight: 700;
+}
+.prose-post a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--brand);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+.prose-post > p:first-child {
+  border-radius: 20px;
+  background: var(--brand-soft);
+  padding: 1rem 1.25rem;
 }

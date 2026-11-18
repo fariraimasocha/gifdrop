@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { env } from 'cloudflare:workers'
 import { z } from 'zod'
-import { ALLOWED_TYPES, MAX_BYTES, classify, isAllowedMediaUrl, resolveTweet } from '#/lib/media'
+import { ALLOWED_TYPES, MAX_BYTES, classify, isAllowedMediaUrl, resolveInstagram, resolveTikTok, resolveTweet } from '#/lib/media'
 
 const Query = z.object({ url: z.string().min(8).max(2048) })
 
@@ -22,10 +22,17 @@ export const Route = createFileRoute('/api/media')({
 
         const target = classify(parsed.data.url)
         if (target.kind === 'invalid') {
-          return fail(400, 'Use an X post, GIPHY, Tenor or direct .gif/.mp4 link.')
+          return fail(400, 'Use an X, TikTok, Instagram, GIPHY or Tenor link.')
         }
 
-        const mediaUrl = target.kind === 'tweet' ? await resolveTweet(target.id) : target.url
+        const mediaUrl =
+          target.kind === 'tweet'
+            ? await resolveTweet(target.id)
+            : target.kind === 'tiktok'
+              ? await resolveTikTok(target.url)
+              : target.kind === 'instagram'
+                ? await resolveInstagram(target.id)
+                : target.url
         if (!mediaUrl) return fail(404, "Couldn't find a GIF or video in that post.")
 
         const upstream = await fetch(mediaUrl, { redirect: 'follow' })

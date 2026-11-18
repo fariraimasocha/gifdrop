@@ -22,7 +22,7 @@ function HistoryPage() {
     <main className="mx-auto w-full max-w-3xl px-4 pt-8 pb-20 sm:px-8 sm:pt-12">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h1 className="font-pixel text-4xl text-foreground">History</h1>
+          <h1 className="font-display text-4xl font-extrabold tracking-[-0.03em] text-foreground">History</h1>
           <p className="mt-2 text-sm text-muted-foreground">Links you've converted. Stored only in this browser.</p>
         </div>
         {history.length > 0 && (
@@ -33,11 +33,11 @@ function HistoryPage() {
       </div>
 
       {history.length === 0 ? (
-        <p className="mt-10 rounded-lg p-8 text-center font-mono text-xs text-dim shadow-[inset_0_0_0_1px_var(--border)]">
+        <p className="mt-10 rounded-lg p-8 text-center font-mono text-xs text-dim ">
           nothing yet. paste a link on Convert
         </p>
       ) : (
-        <ul className="mt-8 divide-y divide-[#1f1f22] overflow-hidden rounded-lg bg-card shadow-[inset_0_0_0_1px_var(--border)]">
+        <ul className="mt-8 divide-y divide-border overflow-hidden rounded-[24px] border border-border bg-card ">
           {history.map((h) => (
             <li key={h.link} className="flex items-center gap-3 py-2.5 pr-2 pl-4 sm:py-3 sm:pr-4">
               <div className="min-w-0 flex-1">

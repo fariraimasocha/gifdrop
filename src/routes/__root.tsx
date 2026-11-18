@@ -1,25 +1,27 @@
-import { HeadContent, Scripts, createRootRoute, useRouterState } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { Toaster } from 'react-hot-toast'
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '#/components/ui/sidebar'
 import { TooltipProvider } from '#/components/ui/tooltip'
-import { AppSidebar, pageTitle } from '#/components/app-sidebar'
+import { PromoBanner, SiteFooter, SiteHeader } from '#/components/site-header'
+import { CF_BEACON_TOKEN, SITE_URL } from '#/lib/site'
 
 import appCss from '../styles.css?url'
 
-// absolute URLs: WhatsApp/X crawlers don't resolve relative og:image paths
-const SITE_URL = 'https://gifdrop.farirai.workers.dev'
 const OG_IMAGE = `${SITE_URL}/og-image.jpg`
-const TITLE = 'gifdrop: send any GIF to WhatsApp'
-const DESCRIPTION = 'Paste an X post or GIPHY link, send it to WhatsApp as a real GIF, then turn it into an animated sticker.'
+const TITLE = 'gifdrop: turn any clip into a WhatsApp sticker'
+const DESCRIPTION =
+  'Paste an X, TikTok, Instagram or GIPHY link and get an animated WhatsApp sticker. Copy, paste, send. Free, no app.'
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1, viewport-fit=cover',
+      },
       { title: TITLE },
       { name: 'description', content: DESCRIPTION },
-      { name: 'theme-color', content: '#09090b' },
+      { name: 'theme-color', content: '#fbf8f3' },
       { property: 'og:type', content: 'website' },
       { property: 'og:url', content: `${SITE_URL}/` },
       { property: 'og:site_name', content: 'gifdrop' },
@@ -37,10 +39,19 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png' },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/favicon-32.png',
+      },
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-      { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
+      {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossOrigin: 'anonymous',
+      },
       { rel: 'stylesheet', href: appCss },
     ],
   }),
@@ -48,9 +59,8 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const pathname = useRouterState({ select: (s) => s.location.pathname })
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <HeadContent />
         <script
@@ -61,33 +71,31 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <TooltipProvider delayDuration={200}>
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset className="min-w-0 bg-background">
-              <header className="sticky top-0 z-30 flex h-[calc(3.5rem+env(safe-area-inset-top))] items-center gap-2 border-b border-[#1f1f22] bg-background/90 px-2 pt-[env(safe-area-inset-top)] backdrop-blur sm:px-4">
-                <SidebarTrigger className="size-10 text-muted-foreground md:size-7" />
-                <span className="h-5 w-px bg-border" aria-hidden />
-                <p className="truncate pl-1 font-mono text-xs text-muted-foreground">{pageTitle(pathname)}</p>
-              </header>
-              {children}
-            </SidebarInset>
-          </SidebarProvider>
+          <PromoBanner />
+          <SiteHeader />
+          {children}
+          <SiteFooter />
         </TooltipProvider>
         <Toaster
           position="top-center"
-          containerStyle={{ top: 'calc(env(safe-area-inset-top) + 64px)' }}
+          containerStyle={{ top: 'calc(env(safe-area-inset-top) + 72px)' }}
           toastOptions={{
             style: {
-              background: '#18181b',
-              color: '#fafafa',
-              border: '1px solid #27272a',
-              borderRadius: 6,
-              fontSize: 13,
+              background: '#ffffff',
+              color: '#17150f',
+              border: '1px solid #e9e3d8',
+              borderRadius: 999,
+              fontSize: 15, fontWeight: 600,
             },
-            success: { iconTheme: { primary: '#3ecf7a', secondary: '#04170c' } },
+            success: {
+              iconTheme: { primary: '#17663d', secondary: '#ffffff' },
+            },
           }}
         />
         <Scripts />
+        {CF_BEACON_TOKEN && (
+          <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: CF_BEACON_TOKEN })} />
+        )}
       </body>
     </html>
   )

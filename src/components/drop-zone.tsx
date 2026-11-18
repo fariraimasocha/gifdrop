@@ -1,4 +1,4 @@
-// Adapted from opensourceui.in "File Upload Field" (MIT, Bidyut Kundu), recoloured for the dark theme.
+// Adapted from opensourceui.in "File Upload Field" (MIT, Bidyut Kundu).
 import { useRef, useState } from 'react'
 import { PixelarticonsImagePlus } from '#/components/icons/pixelarticons/image-plus'
 import { cn } from '#/lib/utils'
@@ -36,9 +36,9 @@ export function DropZone({ onFile, disabled }: { onFile: (f: File) => void; disa
         if (!disabled) pick(e.dataTransfer.files)
       }}
       className={cn(
-        'group relative w-full cursor-pointer overflow-hidden rounded-lg bg-card outline-none transition-colors aspect-[5/3] sm:aspect-[21/9]',
-        'shadow-[inset_0_0_0_1px_var(--border)] hover:bg-[#141416] focus-visible:shadow-[inset_0_0_0_1px_var(--brand)]',
-        dragging && 'bg-[#121a15] shadow-[inset_0_0_0_1px_var(--brand)]',
+        'group relative flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-[22px] border-2 border-dashed border-[#d9d1c2] bg-background px-6 py-10 text-center outline-none transition-colors',
+        'hover:border-foreground focus-visible:border-foreground',
+        dragging && 'border-foreground bg-brand-soft',
         disabled && 'pointer-events-none opacity-50',
       )}
     >
@@ -53,38 +53,16 @@ export function DropZone({ onFile, disabled }: { onFile: (f: File) => void; disa
           e.target.value = ''
         }}
       />
-      <div aria-hidden className="absolute inset-0 grid grid-cols-6 grid-rows-3">
-        {Array.from({ length: 18 }, (_, i) => (
-          <div key={i} className="border-[0.5px] border-[#1a1a1d]" />
-        ))}
-      </div>
-      {['top-3 left-3 border-t border-l', 'top-3 right-3 border-t border-r', 'bottom-3 left-3 border-b border-l', 'bottom-3 right-3 border-b border-r'].map((c) => (
-        <span
-          key={c}
-          aria-hidden
-          className={cn('absolute size-4 border-[#3f3f46] transition-colors group-hover:border-brand', c, dragging && 'border-brand')}
-        />
-      ))}
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
-        <span
-          className={cn(
-            'grid size-10 place-items-center rounded-md bg-muted text-muted-foreground shadow-[inset_0_0_0_1px_#2a2a2e] transition',
-            'group-hover:text-foreground',
-            dragging && 'scale-105 text-brand',
-          )}
-        >
-          <PixelarticonsImagePlus className="size-4" />
-        </span>
-        <p className="text-[15px] text-foreground sm:text-sm">
-          {dragging ? 'Drop it' : (
-            <>
-              <span className="pointer-coarse:hidden">Drop a GIF, paste one, or click to choose</span>
-              <span className="hidden pointer-coarse:inline">Tap to choose a GIF or video</span>
-            </>
-          )}
-        </p>
-        <p className="font-mono text-[11px] text-dim">.gif · .mp4 up to 25 MB</p>
-      </div>
+      <span className={cn('grid size-14 -rotate-6 place-items-center rounded-2xl bg-brand shadow-[0_3px_0_var(--brand-deep)] transition', dragging && 'scale-110 rotate-0')}>
+        <PixelarticonsImagePlus className="size-6" />
+      </span>
+      <p className="font-display text-xl font-extrabold tracking-[-0.02em]">{dragging ? 'Drop it' : 'Drop the drama here.'}</p>
+      <p className="text-muted-foreground">
+        <span className="pointer-coarse:hidden">Drag in a video or GIF, paste one, or click to choose.</span>
+        <span className="hidden pointer-coarse:inline">Pick a video or GIF from your phone.</span>
+      </p>
+      <span className="mt-1 rounded-full border-2 border-foreground bg-card px-5 py-2.5 font-semibold">Choose video or GIF</span>
+      <p className="text-sm text-dim">MP4 or GIF · up to 25 MB</p>
     </div>
   )
 }

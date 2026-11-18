@@ -1,0 +1,120 @@
+import { Link } from '@tanstack/react-router'
+import { PixelarticonsDownload } from '#/components/icons/pixelarticons/download'
+import { FITMYCV_URL } from '#/lib/site'
+
+export const NAV = [
+  { title: 'TikTok', url: '/tiktok' },
+  { title: 'Instagram', url: '/instagram' },
+  { title: 'Blog', url: '/blog' },
+  { title: 'How it works', url: '/help' },
+  { title: 'My stickers', url: '/history' },
+] as const
+
+export function Logo() {
+  return (
+    <span className="flex items-center gap-2.5">
+      {/* pixel droplet on a 12x12 grid, so it stays crisp at small sizes; public/favicon.svg uses the same shape */}
+      <span className="grid size-10 -rotate-6 place-items-center rounded-xl bg-brand shadow-[0_3px_0_var(--brand-deep)]">
+        <svg viewBox="0 0 12 12" shapeRendering="crispEdges" aria-hidden className="size-5 rotate-6">
+          <path className="fill-brand-ink" d="M5 0h2v2h1v2h1v1h1v2h1v3h-1v1h-1v1h-6v-1h-1v-1h-1v-3h1v-2h1v-1h1v-2h1z" />
+          <path className="fill-brand" d="M5 5h1v1h1v1h1v1h-1v1h-1v1h-1z" />
+        </svg>
+      </span>
+      <span className="font-display text-[22px] font-extrabold tracking-[-0.04em] text-foreground">
+        gif<span className="bg-[linear-gradient(transparent_60%,var(--brand)_60%)]">drop</span>
+      </span>
+    </span>
+  )
+}
+
+const pill = 'flex h-11 items-center gap-2 rounded-full border-2 px-4 text-[15px] font-semibold transition'
+
+// cross-promo for fitmycv; utm tags in FITMYCV_URL let fitmycv's analytics count these clicks
+export function PromoBanner() {
+  return (
+    <a
+      href={FITMYCV_URL}
+      target="_blank"
+      rel="noopener"
+      className="group block bg-foreground px-4 py-2.5 text-center text-[14px] leading-snug text-background pt-[calc(env(safe-area-inset-top)+0.625rem)]"
+    >
+      Hate rewriting your CV and cover letter for every job?{' '}
+      <span className="font-semibold whitespace-nowrap text-brand underline decoration-2 underline-offset-4 group-hover:no-underline">
+        Try FitMyCV free →
+      </span>
+    </a>
+  )
+}
+
+export function SiteHeader() {
+  return (
+    <header className="sticky top-0 z-30 border-b border-border bg-background/90 pt-[env(safe-area-inset-top)] backdrop-blur">
+      <div className="mx-auto flex h-[72px] max-w-6xl items-center gap-2 px-4 sm:gap-8 sm:px-6">
+        <Link to="/" aria-label="gifdrop home" className="mr-auto md:mr-0">
+          <Logo />
+        </Link>
+        <nav aria-label="Main" className="mr-auto hidden items-center gap-6 md:flex">
+          {NAV.map((n) => (
+            <Link
+              key={n.url}
+              to={n.url}
+              className="text-[15px] font-medium text-muted-foreground transition-colors hover:text-foreground data-[status=active]:font-semibold data-[status=active]:text-foreground"
+            >
+              {n.title}
+            </Link>
+          ))}
+        </nav>
+        <Link to="/history" className={`${pill} hidden border-border bg-card hover:border-foreground sm:flex md:hidden`}>
+          My stickers
+        </Link>
+        <Link to="/" hash="make" className={`${pill} border-transparent bg-brand shadow-[0_3px_10px_-2px_rgb(242_183_5/0.6)] hover:bg-[#ffe170]`}>
+          Make <PixelarticonsDownload className="size-4" />
+        </Link>
+        {/* phones: native disclosure menu, no JS; closes on navigation because the page re-renders */}
+        <details className="group relative md:hidden">
+          <summary aria-label="Menu" className="grid size-11 cursor-pointer list-none place-items-center rounded-2xl border-2 border-border bg-card [&::-webkit-details-marker]:hidden">
+            <span aria-hidden className="grid w-5 gap-1.5">
+              <span className="h-0.5 rounded bg-foreground" />
+              <span className="h-0.5 rounded bg-foreground" />
+              <span className="h-0.5 rounded bg-foreground" />
+            </span>
+          </summary>
+          <nav aria-label="Mobile" className="absolute right-0 mt-2 grid w-56 rounded-3xl border border-border bg-card p-2 shadow-[0_16px_40px_-12px_rgb(23_21_15/0.25)]">
+            {NAV.map((n) => (
+              <Link
+                key={n.url}
+                to={n.url}
+                onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}
+                className="rounded-2xl px-4 py-3 text-[17px] font-medium hover:bg-muted data-[status=active]:bg-brand-soft data-[status=active]:font-semibold"
+              >
+                {n.title}
+              </Link>
+            ))}
+          </nav>
+        </details>
+      </div>
+    </header>
+  )
+}
+
+export function SiteFooter() {
+  return (
+    <footer className="mt-8 border-t border-border bg-card">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-start sm:justify-between sm:px-6">
+        <div className="max-w-xs">
+          <Logo />
+          <p className="mt-3 leading-relaxed text-muted-foreground">
+            Turn any clip into a WhatsApp sticker. Free, no app, nothing to sign up for.
+          </p>
+        </div>
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-x-10 gap-y-3 text-[15px]">
+          {[{ title: 'Make a sticker', url: '/' } as const, ...NAV].map((n) => (
+            <Link key={n.url} to={n.url} className="text-muted-foreground hover:text-foreground">
+              {n.title}
+            </Link>
+          ))}
+        </nav>
+      </div>
+    </footer>
+  )
+}
