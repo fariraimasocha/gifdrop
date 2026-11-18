@@ -168,7 +168,7 @@ export function StickerEditor({ current }: { current: Current }) {
             onClick={() => setO({ ...o, crop: crop as boolean })}
             className={cn(
               'h-12 rounded-full text-[16px] font-semibold transition',
-              o.crop === crop ? 'bg-card shadow-[0_1px_3px_rgb(23_21_15/0.15)]' : 'text-muted-foreground',
+              o.crop === crop ? 'bg-card shadow-[0_1px_3px_rgb(16_16_16/0.15)]' : 'text-muted-foreground',
             )}
           >
             {label as string}
@@ -224,7 +224,7 @@ export function StickerReady({ current, made }: { current: Current; made: number
         <img src={gif.previewUrl} alt="Your sticker. Press and hold, then Copy image." className="max-h-full max-w-full [-webkit-touch-callout:default]" />
       </div>
 
-      <p className="mt-4 flex items-center gap-3 rounded-2xl border-2 border-[#f3dc85] bg-brand-soft px-5 py-4 text-[16px] font-semibold">
+      <p className="mt-4 flex items-center gap-3 rounded-2xl border-2 border-[#a8e9c6] bg-brand-soft px-5 py-4 text-[16px] font-semibold">
         <span aria-hidden className="grid size-6 shrink-0 place-items-center rounded-full border-2 border-foreground">
           <span className="size-2 rounded-full bg-foreground" />
         </span>

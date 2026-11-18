@@ -1,53 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Sans:opsz,wght@9..40,400..700&family=Geist+Mono:wght@400;500&family=Geist+Pixel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400..800&family=Inter:wght@400..700&family=Geist+Mono:wght@400;500&family=Geist+Pixel&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
-/* Warm paper, ink-black type, sunshine yellow as the one loud colour */
+/* Near-white paper, ink type, one green accent (after treg.to) */
 :root {
   color-scheme: light;
-  --background: #fbf8f3;
-  --foreground: #17150f;
+  --background: #fdfcfb;
+  --foreground: #101010;
   --card: #ffffff;
-  --card-foreground: #17150f;
+  --card-foreground: #101010;
   --popover: #ffffff;
-  --popover-foreground: #17150f;
-  --primary: #17150f;
+  --popover-foreground: #101010;
+  --primary: #101010;
   --primary-foreground: #ffffff;
   --secondary: #ffffff;
-  --secondary-foreground: #17150f;
-  --muted: #f5f1ea;
-  --muted-foreground: #6b6559;
-  --accent: #f5f1ea;
-  --accent-foreground: #17150f;
+  --secondary-foreground: #101010;
+  --muted: #f5f4f1;
+  --muted-foreground: #6b6966;
+  --accent: #f5f4f1;
+  --accent-foreground: #101010;
   --destructive: #b42318;
   --destructive-foreground: #ffffff;
-  --border: #e9e3d8;
-  --input: #e9e3d8;
-  --ring: #f2b705;
-  --dim: #a39b8c;
-  --brand: #ffd84d;
-  --brand-soft: #fff4c7;
-  --brand-deep: #f2b705;
-  --brand-ink: #17150f;
+  --border: #e9e7e2;
+  --input: #e9e7e2;
+  --ring: #22a36a;
+  --dim: #8a8885;
+  --brand: #5be39b;
+  --brand-soft: #e3f4ea;
+  --brand-deep: #22a36a;
+  --brand-ink: #101010;
   --mint: #bdf0d2;
-  --mint-ink: #17663d;
+  --mint-ink: #118453;
   --radius: 1.75rem;
   --sidebar: #ffffff;
-  --sidebar-foreground: #6b6559;
-  --sidebar-primary: #17150f;
+  --sidebar-foreground: #6b6966;
+  --sidebar-primary: #101010;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f5f1ea;
-  --sidebar-accent-foreground: #17150f;
-  --sidebar-border: #e9e3d8;
-  --sidebar-ring: #f2b705;
+  --sidebar-accent: #f5f4f1;
+  --sidebar-accent-foreground: #101010;
+  --sidebar-border: #e9e7e2;
+  --sidebar-ring: #22a36a;
 }
 
 @theme inline {
-  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, monospace;
-  --font-display: 'Bricolage Grotesque', 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-pixel: 'Geist Pixel', 'Geist Mono', ui-monospace, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -123,7 +123,7 @@
 }
 /* transparent-pixel checkerboard behind the sticker preview */
 @utility bg-checker {
-  background: repeating-conic-gradient(#f5f1ea 0 25%, #fdfcfa 0 50%) 0 0 / 18px 18px;
+  background: repeating-conic-gradient(#f5f4f1 0 25%, #fdfcfb 0 50%) 0 0 / 18px 18px;
 }
 
 /* blog post body: rendered from #/lib/md, so plain tags styled here instead of a typography plugin */

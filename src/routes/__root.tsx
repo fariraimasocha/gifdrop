@@ -7,7 +7,7 @@ import { CF_BEACON_TOKEN, SITE_URL } from '#/lib/site'
 import appCss from '../styles.css?url'
 
 const OG_IMAGE = `${SITE_URL}/og-image.jpg`
-const TITLE = 'gifdrop: turn any clip into a WhatsApp sticker'
+const TITLE = 'gifdrop: turn any GIF or clip into a WhatsApp sticker'
 const DESCRIPTION =
   'Paste an X, TikTok, Instagram or GIPHY link and get an animated WhatsApp sticker. Copy, paste, send. Free, no app.'
 
@@ -21,7 +21,7 @@ export const Route = createRootRoute({
       },
       { title: TITLE },
       { name: 'description', content: DESCRIPTION },
-      { name: 'theme-color', content: '#fbf8f3' },
+      { name: 'theme-color', content: '#fdfcfb' },
       { property: 'og:type', content: 'website' },
       { property: 'og:url', content: `${SITE_URL}/` },
       { property: 'og:site_name', content: 'gifdrop' },
@@ -82,13 +82,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           toastOptions={{
             style: {
               background: '#ffffff',
-              color: '#17150f',
-              border: '1px solid #e9e3d8',
+              color: '#101010',
+              border: '1px solid #e9e7e2',
               borderRadius: 999,
               fontSize: 15, fontWeight: 600,
             },
             success: {
-              iconTheme: { primary: '#17663d', secondary: '#ffffff' },
+              iconTheme: { primary: '#118453', secondary: '#ffffff' },
             },
           }}
         />

@@ -14,7 +14,7 @@ export function Logo() {
   return (
     <span className="flex items-center gap-2.5">
       {/* pixel droplet on a 12x12 grid, so it stays crisp at small sizes; public/favicon.svg uses the same shape */}
-      <span className="grid size-10 -rotate-6 place-items-center rounded-xl bg-brand shadow-[0_3px_0_var(--brand-deep)]">
+      <span className="grid size-10 -rotate-6 place-items-center rounded-xl bg-brand shadow-[2px_2px_0_var(--foreground)]">
         <svg viewBox="0 0 12 12" shapeRendering="crispEdges" aria-hidden className="size-5 rotate-6">
           <path className="fill-brand-ink" d="M5 0h2v2h1v2h1v1h1v2h1v3h-1v1h-1v1h-6v-1h-1v-1h-1v-3h1v-2h1v-1h1v-2h1z" />
           <path className="fill-brand" d="M5 5h1v1h1v1h1v1h-1v1h-1v1h-1z" />
@@ -49,7 +49,7 @@ export function PromoBanner() {
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/90 pt-[env(safe-area-inset-top)] backdrop-blur">
-      <div className="mx-auto flex h-[72px] max-w-6xl items-center gap-2 px-4 sm:gap-8 sm:px-6">
+      <div className="mx-auto flex h-20 max-w-7xl items-center gap-2 px-4 sm:gap-8 sm:px-6">
         <Link to="/" aria-label="gifdrop home" className="mr-auto md:mr-0">
           <Logo />
         </Link>
@@ -67,7 +67,7 @@ export function SiteHeader() {
         <Link to="/history" className={`${pill} hidden border-border bg-card hover:border-foreground sm:flex md:hidden`}>
           My stickers
         </Link>
-        <Link to="/" hash="make" className={`${pill} border-transparent bg-brand shadow-[0_3px_10px_-2px_rgb(242_183_5/0.6)] hover:bg-[#ffe170]`}>
+        <Link to="/" hash="make" className={`${pill} border-transparent bg-brand shadow-[2px_2px_0_var(--foreground)] hover:shadow-[4px_4px_0_var(--foreground)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none`}>
           Make <PixelarticonsDownload className="size-4" />
         </Link>
         {/* phones: native disclosure menu, no JS; closes on navigation because the page re-renders */}
@@ -79,7 +79,7 @@ export function SiteHeader() {
               <span className="h-0.5 rounded bg-foreground" />
             </span>
           </summary>
-          <nav aria-label="Mobile" className="absolute right-0 mt-2 grid w-56 rounded-3xl border border-border bg-card p-2 shadow-[0_16px_40px_-12px_rgb(23_21_15/0.25)]">
+          <nav aria-label="Mobile" className="absolute right-0 mt-2 grid w-56 rounded-3xl border border-border bg-card p-2 shadow-[0_16px_40px_-12px_rgb(16_16_16/0.25)]">
             {NAV.map((n) => (
               <Link
                 key={n.url}
