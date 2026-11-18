@@ -85,7 +85,7 @@ function HistoryPage() {
               <li key={s.id} className="group flex flex-col items-center">
                 <div className="animate-bob transition-transform duration-300 group-hover:!rotate-0 group-hover:scale-110" style={scatter(s.id)}>
                   {/* plain <img>: long-press "Copy image" keeps the animation */}
-                  <img src={s.url} alt="Your sticker" className={`size-32 object-contain [-webkit-touch-callout:default] sm:size-40 ${DIE_CUT}`} />
+                  <img src={`${s.url}#gifdrop.gif`} alt="Your sticker" className={`size-32 object-contain [-webkit-touch-callout:default] sm:size-40 ${DIE_CUT}`} />
                 </div>
                 <div className="mt-4 flex gap-1 opacity-100 transition sm:opacity-0 sm:group-focus-within:opacity-100 sm:group-hover:opacity-100">
                   <button type="button" onClick={() => download(new File([s.blob], `gifdrop-${s.id}.gif`, { type: s.blob.type }))} aria-label="Download" className="grid size-9 place-items-center rounded-full border border-border bg-card hover:border-foreground">

@@ -99,7 +99,11 @@ export function Converter({ eyebrow, headline, blurb, placeholder }: Props) {
       <section
         ref={card}
         id="make"
-        className="relative z-10 mx-auto mt-4 max-w-3xl scroll-mt-24 rounded-[32px] border border-border bg-card p-5 shadow-[0_20px_60px_-15px_rgb(0_0_0/0.05)] sm:p-12"
+        className={cn(
+          'relative z-10 mx-auto mt-4 scroll-mt-24 rounded-[32px] border border-border bg-card p-5 shadow-[0_20px_60px_-15px_rgb(0_0_0/0.05)] sm:p-10',
+          // editor gets room for preview + controls side by side
+          step === 1 ? 'max-w-5xl' : 'max-w-3xl',
+        )}
       >
         {step === 0 && <ChooseClip placeholder={placeholder} />}
         {step === 1 && current && <StickerEditor current={current} />}
