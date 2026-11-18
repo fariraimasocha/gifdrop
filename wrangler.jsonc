@@ -5,6 +5,9 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
   "observability": { "enabled": true },
+  // Serve only on gifdrop.xyz; workers.dev off so Google sees one domain
+  "workers_dev": false,
+  "routes": [{ "pattern": "gifdrop.xyz", "custom_domain": true }],
   // 20 media fetches per IP per minute on /api/media
   "ratelimits": [{ "name": "MEDIA_LIMITER", "namespace_id": "1001", "simple": { "limit": 20, "period": 60 } }]
 }
