@@ -3,25 +3,27 @@ import toast from 'react-hot-toast'
 import { PixelarticonsDownload } from '#/components/icons/pixelarticons/download'
 import { PixelarticonsLoader } from '#/components/icons/pixelarticons/loader'
 import { PixelarticonsSend } from '#/components/icons/pixelarticons/send'
+import { PixelarticonsReload } from '#/components/icons/pixelarticons/reload'
 import { PixelarticonsClose } from '#/components/icons/pixelarticons/close'
 import { Button } from '#/components/ui/button'
 import { useGif } from '#/stores/gif'
 import type { Current } from '#/stores/gif'
-import { save, sendToWhatsApp } from '#/lib/client'
+import { saveGif } from '#/lib/client'
 import { toGif } from '#/lib/convert'
 
 const size = (n: number) => (n < 1024 * 1024 ? `${Math.round(n / 1024)} KB` : `${(n / 1024 / 1024).toFixed(1)} MB`)
 
 const STEPS = [
-  ['Get the GIF onto your phone', 'Tap Send and pick any chat (your own works), or tap Save to download it.'],
-  ['Open WhatsApp and tap Create sticker', 'In any chat, tap the sticker icon in the message box, then Create. Or tap the GIF in the chat and choose Create sticker.'],
-  ['Pick your GIF and send', 'Choose the GIF, edit it if you like, then send. It’s saved to your stickers for next time.'],
+  ['Save the GIF', 'Tap Save GIF, then choose “Save Image” so it lands in Photos.'],
+  ['Open WhatsApp → Create', 'Open any chat, tap the sticker icon in the message box, then Create.'],
+  ['Pick the GIF and send', 'Choose it from Photos, edit if you like, and send. It stays in your stickers.'],
 ] as const
 
 export const ResultCard = forwardRef<HTMLElement, { current: Current }>(function ResultCard({ current }, ref) {
   const setCurrent = useGif((s) => s.setCurrent)
   const setGif = useGif((s) => s.setGif)
   const [stage, setStage] = useState<string | null>(null)
+  const [saved, setSaved] = useState(false)
   const gif = current.gif
 
   // Start converting as soon as the clip loads. iOS only allows the share sheet right
@@ -86,13 +88,30 @@ export const ResultCard = forwardRef<HTMLElement, { current: Current }>(function
 
       {/* phones: actions pinned to the bottom, in thumb reach, above the home indicator */}
       <div className="fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-[#1f1f22] bg-background/95 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur sm:static sm:z-auto sm:bg-transparent sm:p-3 sm:backdrop-blur-none">
-        <Button variant="brand" size="lg" className="h-12 flex-1 text-[13px] sm:h-11 sm:text-xs" disabled={!gif} onClick={() => gif && sendToWhatsApp(gif.file)}>
-          {gif ? <PixelarticonsSend /> : <PixelarticonsLoader className="animate-spin" />}
-          {gif ? 'Send GIF to WhatsApp' : (stage ?? 'Preparing GIF…')}
-        </Button>
-        <Button variant="secondary" size="lg" className="size-12 px-0 sm:h-11 sm:w-auto sm:px-5" disabled={!gif} onClick={() => gif && save(gif.file)} aria-label="Save GIF">
-          <PixelarticonsDownload /> <span className="hidden sm:inline">Save</span>
-        </Button>
+        {saved ? (
+          <>
+            {/* whatsapp:// opens the app; the user then taps the sticker icon → Create */}
+            <Button asChild variant="brand" size="lg" className="h-12 flex-1 text-[13px] sm:h-11 sm:text-xs">
+              <a href="whatsapp://send">
+                <PixelarticonsSend /> Open WhatsApp → Create sticker
+              </a>
+            </Button>
+            <Button variant="secondary" size="lg" className="size-12 px-0 sm:h-11 sm:w-auto sm:px-5" onClick={() => setSaved(false)} aria-label="Save again">
+              <PixelarticonsReload /> <span className="hidden sm:inline">Save again</span>
+            </Button>
+          </>
+        ) : (
+          <Button
+            variant="brand"
+            size="lg"
+            className="h-12 flex-1 text-[13px] sm:h-11 sm:text-xs"
+            disabled={!gif}
+            onClick={async () => gif && setSaved(await saveGif(gif.file))}
+          >
+            {gif ? <PixelarticonsDownload /> : <PixelarticonsLoader className="animate-spin" />}
+            {gif ? 'Save GIF' : (stage ?? 'Preparing GIF…')}
+          </Button>
+        )}
       </div>
     </section>
   )

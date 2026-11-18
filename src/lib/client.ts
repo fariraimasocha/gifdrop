@@ -31,20 +31,19 @@ function download(file: File) {
   setTimeout(() => URL.revokeObjectURL(a.href), 1000)
 }
 
-export async function sendToWhatsApp(file: File) {
+// Sharing a file straight into a WhatsApp chat lands as a still photo on iPhone. What works:
+// save the GIF to Photos (share sheet → "Save Image"), then WhatsApp → sticker icon → Create.
+// Returns true once the user has (probably) saved it.
+export async function saveGif(file: File): Promise<boolean> {
   if ('canShare' in navigator && navigator.canShare({ files: [file] })) {
     try {
       await navigator.share({ files: [file] })
+      return true
     } catch (e) {
-      if ((e as Error).name !== 'AbortError') toast.error('Sharing failed, saving it instead.'), download(file)
+      if ((e as Error).name === 'AbortError') return false
     }
-    return
   }
   download(file)
-  toast('Saved. Open gifdrop on your phone to send straight to WhatsApp.', { icon: '📱', duration: 5000 })
-}
-
-export function save(file: File) {
-  download(file)
   toast.success('Saved to your downloads')
+  return true
 }
