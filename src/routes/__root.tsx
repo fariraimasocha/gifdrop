@@ -45,6 +45,8 @@ export const Route = createRootRoute({
         sizes: '32x32',
         href: '/favicon-32.png',
       },
+      // Google search favicon needs a multiple of 48px
+      { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/favicon-192.png' },
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       {
