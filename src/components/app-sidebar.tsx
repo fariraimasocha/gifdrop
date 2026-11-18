@@ -85,7 +85,7 @@ export function AppSidebar() {
         <div className="rounded-lg bg-card p-3 shadow-[inset_0_0_0_1px_var(--border)]">
           <p className="font-mono text-[11px] text-dim">tip</p>
           <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-            Open gifdrop on your phone. The share button sends straight to WhatsApp.
+            Send or save the GIF, then in WhatsApp tap the sticker icon → Create to make it a sticker.
           </p>
         </div>
       </SidebarFooter>

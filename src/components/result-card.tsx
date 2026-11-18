@@ -13,9 +13,9 @@ import { toGif } from '#/lib/convert'
 const size = (n: number) => (n < 1024 * 1024 ? `${Math.round(n / 1024)} KB` : `${(n / 1024 / 1024).toFixed(1)} MB`)
 
 const STEPS = [
-  ['Send', 'Tap the button below and pick a chat in WhatsApp.'],
-  ['Copy', 'In the chat, press and hold the GIF, then tap Copy (under More if you don’t see it).'],
-  ['Paste', 'Paste into the message box and tap Send. It goes as an animated sticker.'],
+  ['Get the GIF onto your phone', 'Tap Send and pick any chat (your own works), or tap Save to download it.'],
+  ['Open WhatsApp and tap Create sticker', 'In any chat, tap the sticker icon in the message box, then Create. Or tap the GIF in the chat and choose Create sticker.'],
+  ['Pick your GIF and send', 'Choose the GIF, edit it if you like, then send. It’s saved to your stickers for next time.'],
 ] as const
 
 export const ResultCard = forwardRef<HTMLElement, { current: Current }>(function ResultCard({ current }, ref) {

@@ -5,8 +5,8 @@ export const Route = createFileRoute('/help')({ component: Help })
 const STEPS = [
   ['01', 'Copy the link', 'Tap share on the X post (or GIPHY/Tenor GIF) and copy the link.'],
   ['02', 'Paste it here', 'gifdrop finds the clip and turns it into a real GIF. You can also drop or pick the file itself.'],
-  ['03', 'Send to WhatsApp', 'On your phone, tap Send GIF and pick a chat. On a computer it downloads instead.'],
-  ['04', 'Turn it into a sticker', 'In WhatsApp, press and hold the GIF, tap Copy, paste it in the message box and send. It goes as an animated sticker.'],
+  ['03', 'Send or save it', 'Tap Send GIF and pick any chat (your own works), or tap Save to download it to your phone.'],
+  ['04', 'Create sticker in WhatsApp', 'Open WhatsApp, tap the sticker icon in the message box, then Create, and pick the GIF. Or tap the GIF in the chat and choose Create sticker. Send it and it’s saved to your stickers.'],
 ] as const
 
 function Help() {
@@ -23,9 +23,9 @@ function Help() {
         ))}
       </ol>
       <div className="mt-6 rounded-lg p-5 shadow-[inset_0_0_0_1px_var(--border)]">
-        <h2 className="text-[15px] font-medium text-foreground">Arrived as a video or photo?</h2>
+        <h2 className="text-[15px] font-medium text-foreground">Can’t find it in Create sticker?</h2>
         <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-          Tap Send GIF, choose <span className="text-foreground">Save Image</span> to put it in Photos, then in WhatsApp tap + and pick it from Photos. GIFs from Photos send as GIFs.
+          Tap Send GIF and choose <span className="text-foreground">Save Image</span> so it lands in Photos, which is where Create sticker looks. Still stuck? Send it to your own chat first, then tap it there and choose Create sticker.
         </p>
       </div>
     </main>
