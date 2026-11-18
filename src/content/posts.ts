@@ -105,7 +105,7 @@ If you want a named pack of 3 to 30 stickers that friends can install, you need 
 ## Step by step
 
 1. **Copy the link.** On the TikTok, tap the share arrow, then **Copy link**.
-2. **Paste it into gifdrop.** Open [gifdrop.farirai.workers.dev/tiktok](/tiktok) and tap **Paste**. The clip loads in a few seconds.
+2. **Paste it into gifdrop.** Open [gifdrop.xyz/tiktok](/tiktok) and tap **Paste**. The clip loads in a few seconds.
 3. **Trim it.** TikToks are long and stickers are short. Drag to the moment with the reaction and pick a length from 1 to 4 seconds.
 4. **Frame it.** Most TikToks are tall. *Fit entire clip* keeps the whole frame with transparent sides. *Square crop* zooms in on the middle, which is usually where the face is.
 5. **Make, copy, paste.** Tap **Make a sticker**, hold the result, tap **Copy image**, open WhatsApp and paste.
