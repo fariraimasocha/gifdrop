@@ -202,11 +202,17 @@ function TrimStrip({
     v.preload = 'auto'
     v.src = src
     const c = document.createElement('canvas')
+    // ponytail: seeked can stall on iOS, so cap each wait at 1.5s rather than hang the strip
+    const wait = (ev: string) => new Promise((r) => { v.addEventListener(ev, r, { once: true }); setTimeout(r, 1500) })
     const grab = async () => {
+      // iOS WebKit won't decode frames of a video that never played: drawImage gives a blank (black) canvas
+      await v.play().catch(() => {})
+      v.pause()
       const out: string[] = []
       for (let i = 0; i < THUMBS && !dead; i++) {
         v.currentTime = ((i + 0.5) / THUMBS) * duration
-        await new Promise((r) => v.addEventListener('seeked', r, { once: true }))
+        await wait('seeked')
+        await new Promise((r) => requestAnimationFrame(r))
         c.height = 96
         c.width = Math.round((96 * v.videoWidth) / (v.videoHeight || 1)) || 96
         c.getContext('2d')?.drawImage(v, 0, 0, c.width, c.height)
@@ -214,7 +220,9 @@ function TrimStrip({
         if (!dead) setThumbs([...out])
       }
     }
-    v.addEventListener('loadeddata', () => void grab().catch(() => {}), { once: true })
+    // iOS ignores preload and never fires loadeddata for an off-DOM video; metadata is enough to start seeking
+    v.addEventListener('loadedmetadata', () => void grab().catch(() => {}), { once: true })
+    v.load()
     return () => {
       dead = true
       v.removeAttribute('src')
@@ -328,7 +336,7 @@ function TrimStrip({
       </div>
 
       {/* playhead */}
-      <span aria-hidden className="pointer-events-none absolute inset-y-1 z-20 w-0.5 rounded-full bg-white shadow-[0_0_0_1px_rgb(0_0_0/0.3)]" style={{ left: pct(now) }} />
+      <span aria-hidden className="pointer-events-none absolute inset-y-1 z-20 w-0.5 rounded-full bg-white shadow-[0_0_0_1px_rgb(0_0_0/0.3)]" style={{ left: `calc(${pct(start)} + 22px + (${pct(secs)} - 46px) * ${clamp((now - start) / secs, 0, 1)})` }} />
     </div>
   )
 }
