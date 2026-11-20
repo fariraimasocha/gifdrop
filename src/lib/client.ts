@@ -11,8 +11,14 @@ export function loadFile(file: File, source: string) {
   useGif.getState().setCurrent({ file, previewUrl: URL.createObjectURL(file), source })
 }
 
+// fetch only rejects when no answer came back at all: offline, or the connection dropped
+export const reach = (url: string) =>
+  fetch(url).catch(() => {
+    throw new Error('No connection. Your link is still in the box: reconnect and try again.')
+  })
+
 export async function fetchLink(link: string) {
-  const res = await fetch(`/api/media?url=${encodeURIComponent(link)}`)
+  const res = await reach(`/api/media?url=${encodeURIComponent(link)}`)
   if (!res.ok) {
     const { error } = (await res.json().catch(() => ({}))) as { error?: string }
     throw new Error(error ?? 'Something went wrong.')
@@ -28,5 +34,7 @@ export function download(file: File) {
   a.href = URL.createObjectURL(file)
   a.download = file.name
   a.click()
+  // same words as the video downloader: one product, one message for one event
+  toast.success('Download started')
   setTimeout(() => URL.revokeObjectURL(a.href), 1000)
 }

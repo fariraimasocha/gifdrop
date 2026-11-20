@@ -117,7 +117,8 @@
   animation: bob 5s ease-in-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .animate-bob {
+  .animate-bob,
+  [data-slot='dropdown-menu-content'] {
     animation: none;
   }
 }

@@ -6,7 +6,7 @@ import { PixelarticonsReload } from '#/components/icons/pixelarticons/reload'
 import { HERO_CLIPS } from '#/components/converter'
 import { useGif } from '#/stores/gif'
 import { download, fetchLink } from '#/lib/client'
-import { clearStickers, deleteSticker, listStickers } from '#/lib/stickers'
+import { MAX, clearStickers, deleteSticker, listStickers, restoreStickers } from '#/lib/stickers'
 import type { Saved } from '#/lib/stickers'
 
 export const Route = createFileRoute('/history')({
@@ -25,6 +25,7 @@ type Shown = Saved & { url: string }
 
 function HistoryPage() {
   const history = useGif((s) => s.history)
+  const made = useGif((s) => s.made)
   const clearLinks = useGif((s) => s.clearHistory)
   const navigate = useNavigate()
   const [stickers, setStickers] = useState<Shown[] | null>(null)
@@ -45,15 +46,43 @@ function HistoryPage() {
       .then(() => navigate({ to: '/', hash: 'make' }))
       .catch(() => {})
 
-  const remove = async (id: number) => {
-    await deleteSticker(id)
+  // deleting is instant, so it has to be reversible: the toast says what happened and offers the way back
+  const undoable = (message: string, undo: () => Promise<void>) =>
+    toast(
+      (t) => (
+        <span className="flex items-center gap-3">
+          {message}
+          <button
+            type="button"
+            onClick={() => {
+              toast.dismiss(t.id)
+              void undo().then(load)
+            }}
+            className="font-bold underline decoration-brand decoration-[3px] underline-offset-4"
+          >
+            Undo
+          </button>
+        </span>
+      ),
+      { duration: 8000 },
+    )
+
+  const remove = async ({ url: _url, ...sticker }: Shown) => {
+    await deleteSticker(sticker.id)
     void load()
+    undoable('Sticker deleted', () => restoreStickers([sticker]))
   }
 
   const clearAll = async () => {
+    const kept = (stickers ?? []).map(({ url: _url, ...s }) => s)
+    const links = history
     await clearStickers()
     clearLinks()
     void load()
+    undoable('Everything cleared', async () => {
+      await restoreStickers(kept)
+      useGif.setState({ history: links })
+    })
   }
 
   const empty = stickers?.length === 0 && history.length === 0
@@ -63,7 +92,10 @@ function HistoryPage() {
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-            {stickers?.length ?? 0} sticker{stickers?.length === 1 ? '' : 's'} · saved only in this browser
+            {/* no count until the board has loaded: "0 stickers" for a moment would look like they were lost */}
+            {stickers && `${stickers.length} sticker${stickers.length === 1 ? '' : 's'} · `}
+            {made > (stickers?.length ?? made) && `${made} made in total · `}
+            saved only in this browser
           </p>
           <h1 className="mt-3 font-display text-[clamp(2.2rem,6vw,3.25rem)] leading-none font-semibold tracking-[-0.03em]">My stickers</h1>
         </div>
@@ -96,13 +128,18 @@ function HistoryPage() {
                       <PixelarticonsReload className="size-4" />
                     </button>
                   )}
-                  <button type="button" onClick={() => remove(s.id)} aria-label="Delete" className="grid size-9 place-items-center rounded-full border border-border bg-card text-lg leading-none hover:border-foreground">
+                  <button type="button" onClick={() => remove(s)} aria-label="Delete" className="grid size-9 place-items-center rounded-full border border-border bg-card text-lg leading-none hover:border-foreground">
                     ×
                   </button>
                 </div>
               </li>
             ))}
           </ul>
+          {stickers.length >= MAX && (
+            <p className="mx-auto mt-12 max-w-md text-center text-sm text-muted-foreground">
+              This board keeps your newest {MAX} stickers. Download any you want to keep for good.
+            </p>
+          )}
         </>
       )}
 

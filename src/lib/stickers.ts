@@ -2,7 +2,7 @@
 // Piggy bank: the more you make, the more you'd lose by leaving.
 export type Saved = { id: number; at: number; blob: Blob; link?: string }
 
-const MAX = 60 // ponytail: oldest drop off past 60; stickers are <500 KB so this stays well under quota
+export const MAX = 60 // ponytail: oldest drop off past 60; stickers are <500 KB so this stays well under quota
 
 function store(mode: IDBTransactionMode) {
   return new Promise<IDBObjectStore>((res, rej) => {
@@ -32,3 +32,8 @@ export async function saveSticker(blob: Blob, link?: string) {
 export const listStickers = async () => ((await done((await store('readonly')).getAll())) as Saved[]).reverse()
 export const deleteSticker = async (id: number) => done((await store('readwrite')).delete(id))
 export const clearStickers = async () => done((await store('readwrite')).clear())
+// undo for delete and clear: same ids, so each sticker returns to its place on the board
+export async function restoreStickers(items: Saved[]) {
+  const s = await store('readwrite')
+  await Promise.all(items.map(({ id, at, blob, link }) => done(s.put({ id, at, blob, link }))))
+}

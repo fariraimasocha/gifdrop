@@ -12,7 +12,7 @@ import { DropZone } from '#/components/drop-zone'
 import { StickerEditor, StickerReady } from '#/components/sticker-steps'
 import { useGif } from '#/stores/gif'
 import { fetchLink, loadFile } from '#/lib/client'
-import { cn } from '#/lib/utils'
+import { cn, scrollBehavior } from '#/lib/utils'
 
 const isLink = (v: string) => /^https?:\/\/\S+$/i.test(v)
 
@@ -40,7 +40,7 @@ export function Converter({ eyebrow, headline, blurb, placeholder }: Props) {
   // phones: each new step starts at the top of the card, not wherever the last one was scrolled
   useEffect(() => {
     if (step > 0 && window.matchMedia('(max-width: 639px)').matches) {
-      card.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      card.current?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' })
     }
   }, [step])
 
@@ -173,7 +173,7 @@ export const HERO_CLIPS = [
   { src: '/hero/liotta.mp4', tag: 'LMAO', at: 'top-52 -left-4 rotate-[8deg] [animation-delay:-2s]' },
   { src: '/hero/obajeeeeeee.mp4', tag: 'us fr', at: 'top-[24rem] -left-2 rotate-[-6deg] [animation-delay:-4s]' },
   { src: '/hero/costanza.mp4', tag: 'yesss', at: 'top-4 right-6 rotate-[8deg] [animation-delay:-1s]' },
-  { src: '/hero/harold.mp4', tag: 'it’s fine', at: 'top-56 -right-2 rotate-[-5deg] [animation-delay:-3s]' },
+  { src: '/hero/harold.mp4', tag: 'it’s fine', at: 'top-56 right-0 rotate-[-5deg] [animation-delay:-3s]' },
 ]
 
 // hard offset "sticker" shadow used across the page
@@ -183,13 +183,13 @@ const INK_SHADOW_LG = 'shadow-[4px_4px_0_var(--foreground)]'
 const FAQ = [
   ['Does it work on iPhone and Android?', 'Yes. It runs in Safari or Chrome, no app to install. Hold the finished sticker, tap Copy image, and paste it into a WhatsApp chat.'],
   ['Does it work in WhatsApp Web?', 'Not really. WhatsApp Web can’t paste animated stickers, so make and send them from your phone.'],
-  ['Is gifdrop free?', 'Yes. No watermark, no sign-up, no limits.'],
+  ['Is gifdrop free?', 'Yes. No watermark and no sign-up.'],
   ['Are my clips uploaded anywhere?', 'No. The sticker is built on your device. Links are only fetched so your phone can grab the clip.'],
   ['Why did it send as a picture, not a sticker?', 'WhatsApp skips the “Custom sticker” preview for big files. Make it again in Compact or a shorter length.'],
 ] as const
 
 function ChooseClip({ placeholder }: { placeholder: string }) {
-  const { register, handleSubmit, setValue, watch, formState } = useForm<Form>({
+  const { register, handleSubmit, setValue, setError, watch, formState } = useForm<Form>({
     resolver: zodResolver(schema),
     defaultValues: { link: '' },
   })
@@ -197,9 +197,15 @@ function ChooseClip({ placeholder }: { placeholder: string }) {
   const busy = formState.isSubmitting
 
   const onSubmit = handleSubmit(async ({ link: l }) => {
-    await toast
-      .promise(fetchLink(l), { loading: 'Grabbing your clip…', success: 'Got it', error: (e: Error) => e.message })
-      .catch(() => {})
+    const id = toast.loading('Grabbing your clip…')
+    try {
+      await fetchLink(l)
+      toast.success('Got it', { id })
+    } catch (e) {
+      // a toast is gone in seconds; the reason stays under the box until the link changes
+      toast.dismiss(id)
+      setError('link', { type: 'server', message: (e as Error).message })
+    }
   })
 
   // on phones there's no global paste, so a button reads the clipboard: copy on X, tap Paste here

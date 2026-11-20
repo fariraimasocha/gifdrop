@@ -13,5 +13,5 @@ export const Route = createFileRoute('/twitter-video-downloader')({
       { property: 'og:description', content: DESCRIPTION },
     ],
   }),
-  component: VideoDownloader,
+  component: () => <VideoDownloader platform="x" />,
 })

@@ -13,12 +13,14 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as InstagramRouteImport } from './routes/instagram'
+import { Route as InstagramVideoDownloaderRouteImport } from './routes/instagram-video-downloader'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TiktokRouteImport } from './routes/tiktok'
+import { Route as TiktokVideoDownloaderRouteImport } from './routes/tiktok-video-downloader'
 import { Route as TwitterVideoDownloaderRouteImport } from './routes/twitter-video-downloader'
 import { Route as ApiMediaRouteImport } from './routes/api/media'
-import { Route as ApiXVideoRouteImport } from './routes/api/x-video'
-import { Route as ApiXVideoFileRouteImport } from './routes/api/x-video-file'
+import { Route as ApiVideoRouteImport } from './routes/api/video'
+import { Route as ApiVideoFileRouteImport } from './routes/api/video-file'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
@@ -42,6 +44,12 @@ const InstagramRoute = InstagramRouteImport.update({
   path: '/instagram',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InstagramVideoDownloaderRoute =
+  InstagramVideoDownloaderRouteImport.update({
+    id: '/instagram-video-downloader',
+    path: '/instagram-video-downloader',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -50,6 +58,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const TiktokRoute = TiktokRouteImport.update({
   id: '/tiktok',
   path: '/tiktok',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TiktokVideoDownloaderRoute = TiktokVideoDownloaderRouteImport.update({
+  id: '/tiktok-video-downloader',
+  path: '/tiktok-video-downloader',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TwitterVideoDownloaderRoute = TwitterVideoDownloaderRouteImport.update({
@@ -62,14 +75,14 @@ const ApiMediaRoute = ApiMediaRouteImport.update({
   path: '/api/media',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiXVideoRoute = ApiXVideoRouteImport.update({
-  id: '/api/x-video',
-  path: '/api/x-video',
+const ApiVideoRoute = ApiVideoRouteImport.update({
+  id: '/api/video',
+  path: '/api/video',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiXVideoFileRoute = ApiXVideoFileRouteImport.update({
-  id: '/api/x-video-file',
-  path: '/api/x-video-file',
+const ApiVideoFileRoute = ApiVideoFileRouteImport.update({
+  id: '/api/video-file',
+  path: '/api/video-file',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -88,12 +101,14 @@ export interface FileRoutesByFullPath {
   '/help': typeof HelpRoute
   '/history': typeof HistoryRoute
   '/instagram': typeof InstagramRoute
+  '/instagram-video-downloader': typeof InstagramVideoDownloaderRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tiktok': typeof TiktokRoute
+  '/tiktok-video-downloader': typeof TiktokVideoDownloaderRoute
   '/twitter-video-downloader': typeof TwitterVideoDownloaderRoute
   '/api/media': typeof ApiMediaRoute
-  '/api/x-video': typeof ApiXVideoRoute
-  '/api/x-video-file': typeof ApiXVideoFileRoute
+  '/api/video': typeof ApiVideoRoute
+  '/api/video-file': typeof ApiVideoFileRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -102,12 +117,14 @@ export interface FileRoutesByTo {
   '/help': typeof HelpRoute
   '/history': typeof HistoryRoute
   '/instagram': typeof InstagramRoute
+  '/instagram-video-downloader': typeof InstagramVideoDownloaderRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tiktok': typeof TiktokRoute
+  '/tiktok-video-downloader': typeof TiktokVideoDownloaderRoute
   '/twitter-video-downloader': typeof TwitterVideoDownloaderRoute
   '/api/media': typeof ApiMediaRoute
-  '/api/x-video': typeof ApiXVideoRoute
-  '/api/x-video-file': typeof ApiXVideoFileRoute
+  '/api/video': typeof ApiVideoRoute
+  '/api/video-file': typeof ApiVideoFileRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
 }
@@ -117,12 +134,14 @@ export interface FileRoutesById {
   '/help': typeof HelpRoute
   '/history': typeof HistoryRoute
   '/instagram': typeof InstagramRoute
+  '/instagram-video-downloader': typeof InstagramVideoDownloaderRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tiktok': typeof TiktokRoute
+  '/tiktok-video-downloader': typeof TiktokVideoDownloaderRoute
   '/twitter-video-downloader': typeof TwitterVideoDownloaderRoute
   '/api/media': typeof ApiMediaRoute
-  '/api/x-video': typeof ApiXVideoRoute
-  '/api/x-video-file': typeof ApiXVideoFileRoute
+  '/api/video': typeof ApiVideoRoute
+  '/api/video-file': typeof ApiVideoFileRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -133,12 +152,14 @@ export interface FileRouteTypes {
     | '/help'
     | '/history'
     | '/instagram'
+    | '/instagram-video-downloader'
     | '/sitemap.xml'
     | '/tiktok'
+    | '/tiktok-video-downloader'
     | '/twitter-video-downloader'
     | '/api/media'
-    | '/api/x-video'
-    | '/api/x-video-file'
+    | '/api/video'
+    | '/api/video-file'
     | '/blog/$slug'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
@@ -147,12 +168,14 @@ export interface FileRouteTypes {
     | '/help'
     | '/history'
     | '/instagram'
+    | '/instagram-video-downloader'
     | '/sitemap.xml'
     | '/tiktok'
+    | '/tiktok-video-downloader'
     | '/twitter-video-downloader'
     | '/api/media'
-    | '/api/x-video'
-    | '/api/x-video-file'
+    | '/api/video'
+    | '/api/video-file'
     | '/blog/$slug'
     | '/blog'
   id:
@@ -161,12 +184,14 @@ export interface FileRouteTypes {
     | '/help'
     | '/history'
     | '/instagram'
+    | '/instagram-video-downloader'
     | '/sitemap.xml'
     | '/tiktok'
+    | '/tiktok-video-downloader'
     | '/twitter-video-downloader'
     | '/api/media'
-    | '/api/x-video'
-    | '/api/x-video-file'
+    | '/api/video'
+    | '/api/video-file'
     | '/blog/$slug'
     | '/blog/'
   fileRoutesById: FileRoutesById
@@ -176,12 +201,14 @@ export interface RootRouteChildren {
   HelpRoute: typeof HelpRoute
   HistoryRoute: typeof HistoryRoute
   InstagramRoute: typeof InstagramRoute
+  InstagramVideoDownloaderRoute: typeof InstagramVideoDownloaderRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TiktokRoute: typeof TiktokRoute
+  TiktokVideoDownloaderRoute: typeof TiktokVideoDownloaderRoute
   TwitterVideoDownloaderRoute: typeof TwitterVideoDownloaderRoute
   ApiMediaRoute: typeof ApiMediaRoute
-  ApiXVideoRoute: typeof ApiXVideoRoute
-  ApiXVideoFileRoute: typeof ApiXVideoFileRoute
+  ApiVideoRoute: typeof ApiVideoRoute
+  ApiVideoFileRoute: typeof ApiVideoFileRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
@@ -216,6 +243,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InstagramRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/instagram-video-downloader': {
+      id: '/instagram-video-downloader'
+      path: '/instagram-video-downloader'
+      fullPath: '/instagram-video-downloader'
+      preLoaderRoute: typeof InstagramVideoDownloaderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -228,6 +262,13 @@ declare module '@tanstack/react-router' {
       path: '/tiktok'
       fullPath: '/tiktok'
       preLoaderRoute: typeof TiktokRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tiktok-video-downloader': {
+      id: '/tiktok-video-downloader'
+      path: '/tiktok-video-downloader'
+      fullPath: '/tiktok-video-downloader'
+      preLoaderRoute: typeof TiktokVideoDownloaderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/twitter-video-downloader': {
@@ -244,18 +285,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiMediaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/x-video': {
-      id: '/api/x-video'
-      path: '/api/x-video'
-      fullPath: '/api/x-video'
-      preLoaderRoute: typeof ApiXVideoRouteImport
+    '/api/video': {
+      id: '/api/video'
+      path: '/api/video'
+      fullPath: '/api/video'
+      preLoaderRoute: typeof ApiVideoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/x-video-file': {
-      id: '/api/x-video-file'
-      path: '/api/x-video-file'
-      fullPath: '/api/x-video-file'
-      preLoaderRoute: typeof ApiXVideoFileRouteImport
+    '/api/video-file': {
+      id: '/api/video-file'
+      path: '/api/video-file'
+      fullPath: '/api/video-file'
+      preLoaderRoute: typeof ApiVideoFileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -280,12 +321,14 @@ const rootRouteChildren: RootRouteChildren = {
   HelpRoute: HelpRoute,
   HistoryRoute: HistoryRoute,
   InstagramRoute: InstagramRoute,
+  InstagramVideoDownloaderRoute: InstagramVideoDownloaderRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TiktokRoute: TiktokRoute,
+  TiktokVideoDownloaderRoute: TiktokVideoDownloaderRoute,
   TwitterVideoDownloaderRoute: TwitterVideoDownloaderRoute,
   ApiMediaRoute: ApiMediaRoute,
-  ApiXVideoRoute: ApiXVideoRoute,
-  ApiXVideoFileRoute: ApiXVideoFileRoute,
+  ApiVideoRoute: ApiVideoRoute,
+  ApiVideoFileRoute: ApiVideoFileRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
 }

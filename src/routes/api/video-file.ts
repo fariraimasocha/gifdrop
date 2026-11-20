@@ -1,16 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { env } from 'cloudflare:workers'
 import { z } from 'zod'
-import { downloadName, isTwitterVideoUrl } from '#/lib/xvideo'
+import { isAllowedMediaUrl } from '#/lib/media'
+import { downloadName } from '#/lib/downloader'
 
-const Query = z.object({ file: z.string().min(8).max(2048), name: z.string().max(200).optional() })
+const Query = z.object({ file: z.string().min(8).max(4096), name: z.string().max(200).optional() })
 
 const fail = (status: number, error: string) =>
   Response.json({ error }, { status, headers: { 'cache-control': 'no-store' } })
 
-// Streams one X video file as a download. X's CDN refuses requests that carry another site's Referer,
-// so the browser can't fetch it directly; the Worker does, and passes the bytes straight through.
-export const Route = createFileRoute('/api/x-video-file')({
+// Streams one video file as a download. The browser can't fetch it directly: X's CDN refuses requests
+// that carry another site's Referer, and a cross-site link can't be forced to download instead of play.
+// So the Worker fetches it and passes the bytes straight through.
+export const Route = createFileRoute('/api/video-file')({
   server: {
     handlers: {
       GET: async ({ request }) => {
@@ -20,11 +22,13 @@ export const Route = createFileRoute('/api/x-video-file')({
         }
 
         const parsed = Query.safeParse(Object.fromEntries(new URL(request.url).searchParams))
-        if (!parsed.success || !isTwitterVideoUrl(parsed.data.file)) return fail(400, "That isn't an X video file.")
+        if (!parsed.success || !isAllowedMediaUrl(parsed.data.file)) return fail(400, "That isn't a video we can download.")
 
         const upstream = await fetch(parsed.data.file, { redirect: 'follow' })
-        // a redirect could leave X's CDN, so check where we actually ended up
-        if (!upstream.ok || !isTwitterVideoUrl(upstream.url)) return fail(502, "Couldn't download that video.")
+        // a redirect could leave the allowlist, so check where we actually ended up
+        if (!upstream.ok || !isAllowedMediaUrl(upstream.url)) {
+          return fail(502, "Couldn't download that video. The link may have expired: look it up again.")
+        }
 
         const type = (upstream.headers.get('content-type') ?? '').split(';')[0].trim()
         if (type !== 'video/mp4') return fail(415, "That file isn't a video.")

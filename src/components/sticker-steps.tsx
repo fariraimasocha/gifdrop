@@ -423,7 +423,7 @@ export function StickerReady({ current, made }: { current: Current; made: number
           </Button>
         </div>
       </div>
-      <p className="mt-4 text-center text-sm text-dim">Nothing from this session leaves your phone.</p>
+      <p className="mt-4 text-center text-sm text-dim">Your sticker was made on this device and is never uploaded.</p>
     </>
   )
 }
