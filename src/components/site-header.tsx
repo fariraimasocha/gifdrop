@@ -5,6 +5,7 @@ import { FITMYCV_URL } from '#/lib/site'
 export const NAV = [
   { title: 'TikTok', url: '/tiktok', hash: 'make' },
   { title: 'Instagram', url: '/instagram', hash: 'make' },
+  { title: 'X video downloader', url: '/twitter-video-downloader' },
   { title: 'Blog', url: '/blog' },
   { title: 'How it works', url: '/help' },
   { title: 'My stickers', url: '/history' },
@@ -50,10 +51,11 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/90 pt-[env(safe-area-inset-top)] backdrop-blur">
       <div className="mx-auto flex h-20 max-w-7xl items-center gap-2 px-4 sm:gap-8 sm:px-6">
-        <Link to="/" aria-label="gifdrop home" className="mr-auto md:mr-0">
+        <Link to="/" aria-label="gifdrop home" className="mr-auto lg:mr-0">
           <Logo />
         </Link>
-        <nav aria-label="Main" className="mr-auto hidden items-center gap-6 md:flex">
+        {/* six links need ~590px, which the bar only has from lg up; narrower screens get the menu */}
+        <nav aria-label="Main" className="mr-auto hidden items-center gap-6 lg:flex">
           {NAV.map((n) => (
             <Link
               key={n.url}
@@ -64,14 +66,14 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <Link to="/history" className={`${pill} hidden border-border bg-card hover:border-foreground sm:flex md:hidden`}>
+        <Link to="/history" className={`${pill} hidden border-border bg-card hover:border-foreground sm:flex lg:hidden`}>
           My stickers
         </Link>
         <Link to="/" hash="make" className={`${pill} border-transparent bg-brand shadow-[2px_2px_0_var(--foreground)] hover:shadow-[4px_4px_0_var(--foreground)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none`}>
           Make <PixelarticonsDownload className="size-4" />
         </Link>
         {/* phones: native disclosure menu, no JS; closes on navigation because the page re-renders */}
-        <details className="group relative md:hidden">
+        <details className="group relative lg:hidden">
           <summary aria-label="Menu" className="grid size-11 cursor-pointer list-none place-items-center rounded-2xl border-2 border-border bg-card [&::-webkit-details-marker]:hidden">
             <span aria-hidden className="grid w-5 gap-1.5">
               <span className="h-0.5 rounded bg-foreground" />

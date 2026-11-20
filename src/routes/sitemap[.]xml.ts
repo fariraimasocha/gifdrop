@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { POSTS } from '#/content/posts'
 import { SITE_URL } from '#/lib/site'
 
-const PAGES = ['/', '/tiktok', '/instagram', '/help', '/blog', ...POSTS.map((p) => `/blog/${p.slug}`)]
+const PAGES = ['/', '/tiktok', '/instagram', '/twitter-video-downloader', '/help', '/blog', ...POSTS.map((p) => `/blog/${p.slug}`)]
 
 export const Route = createFileRoute('/sitemap.xml')({
   server: {
